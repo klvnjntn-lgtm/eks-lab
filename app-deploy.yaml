@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-service
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+    
+    service.beta.kubernetes.io/aws-load-balancer-type: "external"
+    
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
+    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-05d7f721220f5320e, subnet-07b8df0ad2f3f17d7
+
+spec:
+  selector:
+    app: my-web-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer

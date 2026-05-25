@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guestbook-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guestbook-ui
+  template:
+    metadata:
+      labels:
+        app: guestbook-ui
+    spec:
+      containers:
+      - name: guestbook-ui
+        image: 304188066409.dkr.ecr.ap-southeast-1.amazonaws.com/guestbook-ui:latest
+        imagePullPolicy: Always 
+        ports:
+        - containerPort: 80
