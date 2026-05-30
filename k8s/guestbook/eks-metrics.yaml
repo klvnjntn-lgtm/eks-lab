@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ecs-metrics-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1" # This matches the labelValue in Step 1
+annotations:
+  grafana_folder: "EKS Cluster" # Optional: Sorts it into a folder in the UI
+data:
+  ecs-dashboard.json: |-
+    {
+      "annotations": { "list": [] },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": null,
+      "title": "ECS Core Metrics",
+      "panels": [
+        {
+          "type": "gauge",
+          "title": "Sample Metric Panel",
+          "id": 1,
+          "targets": [
+            {
+              "datasource": { "type": "cloudwatch", "uid": "aws-cloudwatch" },
+              "expression": "SELECT AVG(CPUUtilization) FROM SCHEMA(\"AWS/ECS\", ClusterName)",
+              "id": "A"
+            }
+          ]
+        }
+      ]
+    }
