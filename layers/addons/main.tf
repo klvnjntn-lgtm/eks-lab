@@ -13,11 +13,6 @@ module "karpenter" {
   karpenter_version      = "1.0.1"
   enable_helm            = true
 
-  depends_on = [
-    module.eks,
-    module.vpc
-  ]
-
   alb_controller_status = [
     data.terraform_remote_state.infra.outputs.vpc_id,
     data.terraform_remote_state.infra.outputs.interface_endpoint_ids
