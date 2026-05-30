@@ -11,7 +11,7 @@ spec:
     chart: grafana
     helm:
       values: |
-        adminPassword: "YourSecureGrafanaPassword"
+        adminPassword: "Grafana123"
         sidecar:
           dashboards:
             enabled: true
