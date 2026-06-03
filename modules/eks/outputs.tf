@@ -25,7 +25,6 @@ output "node_iam_role_arn" {
 
 output "node_security_group_id" {
   description = "The security group ID attached to the EKS cluster/nodes"
-  # EKS creates a default SG for the cluster and nodes to talk
 value       = aws_security_group.node.id
 }
 

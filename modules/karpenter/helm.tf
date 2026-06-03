@@ -92,7 +92,6 @@ resource "kubectl_manifest" "karpenter_node_class" {
     }
   })
 
-  # Option B: Wait for the controller/CRDs to exist
   depends_on = [helm_release.karpenter]
 }
 
@@ -127,7 +126,6 @@ resource "kubectl_manifest" "karpenter_node_pool" {
     }
   })
 
-  # Also depends on the class created above to ensure sequential setup
   depends_on = [
     helm_release.karpenter,
     kubectl_manifest.karpenter_node_class

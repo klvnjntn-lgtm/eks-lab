@@ -1,7 +1,7 @@
 name: "EKS Destroy"
 
 on:
-  workflow_dispatch: # Manual trigger only for safety
+  workflow_dispatch:
 
 jobs:
   terraform-destroy:

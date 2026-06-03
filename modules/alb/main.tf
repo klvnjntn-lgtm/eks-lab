@@ -9,7 +9,6 @@ resource "helm_release" "aws_load_balancer_controller" {
     value = var.cluster_name
   }
 
-  # ADD THESE TWO BLOCKS:
   set {
     name  = "vpcId"
     value = var.vpc_id

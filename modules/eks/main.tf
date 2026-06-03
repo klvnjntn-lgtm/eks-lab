@@ -1,4 +1,3 @@
-# --- 1. Pull the Permanent IAM from Bootstrap ---
 data "terraform_remote_state" "bootstrap" {
   backend = "s3"
   config = {
@@ -13,7 +12,7 @@ resource "aws_eks_cluster" "this" {
   role_arn = var.cluster_role_arn
 
   vpc_config {
-    subnet_ids              = var.public_subnets # Using public for cost-optimization
+    subnet_ids              = var.public_subnets
     endpoint_private_access = true 
     endpoint_public_access  = true  
   }
@@ -24,7 +23,6 @@ resource "aws_eks_cluster" "this" {
   }
 }
 
-# --- 3. OIDC Provider (Tied to this specific Cluster) ---
 data "tls_certificate" "this" {
   url = aws_eks_cluster.this.identity[0].oidc[0].issuer
 }
@@ -35,7 +33,6 @@ resource "aws_iam_openid_connect_provider" "this" {
   url             = aws_eks_cluster.this.identity[0].oidc[0].issuer
 }
 
-# --- 4. Admin Access Entries ---
 resource "aws_eks_access_entry" "kelvin" {
   cluster_name  = aws_eks_cluster.this.name
   principal_arn = "arn:aws:iam::304188066409:user/terraform-kelvin"
@@ -52,7 +49,6 @@ resource "aws_eks_access_policy_association" "kelvin_admin" {
   }
 }
 
-# --- 5. Security Groups ---
 resource "aws_security_group" "node" {
   name        = "${var.cluster_name}-node-sg"
   description = "Security group for all nodes in the cluster"

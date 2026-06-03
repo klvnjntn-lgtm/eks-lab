@@ -55,8 +55,8 @@ resource "aws_iam_policy" "karpenter_controller" {
           "ec2:DescribeSubnets",
           "ec2:RunInstances",
           "ec2:TerminateInstances",
-          "ec2:DescribeSpotPriceHistory", # ADD THIS
-          "pricing:GetProducts"           # ADD THIS
+          "ec2:DescribeSpotPriceHistory", 
+          "pricing:GetProducts"           
         ]
         Effect   = "Allow"
         Resource = "*"
@@ -88,7 +88,6 @@ resource "aws_iam_policy" "karpenter_controller" {
         Resource = "arn:aws:eks:ap-southeast-1:304188066409:cluster/${var.cluster_name}"
       },
       {
-        # NEW: Instance Profile Management for v1.0.1
         Action = [
           "iam:CreateInstanceProfile",
           "iam:AddRoleToInstanceProfile",
@@ -117,7 +116,7 @@ resource "aws_iam_policy" "karpenter_controller" {
 
 resource "aws_iam_role_policy" "karpenter_controller_eks_describe" {
   name = "karpenter-cluster-discovery"
-role = aws_iam_role.karpenter_controller_role.name # <--- CHANGE THIS
+role = aws_iam_role.karpenter_controller_role.name
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -143,14 +142,11 @@ resource "aws_iam_role" "karpenter_controller_role" {
         Action = "sts:AssumeRoleWithWebIdentity"
         Effect = "Allow"
         Principal = {
-          # Use the variable, NOT the module reference
           Federated = var.oidc_arn 
         }
         Condition = {
           StringEquals = {
-# 1. FIXED: Changed 'karpenter' namespace to 'kube-system'
             "${replace(var.oidc_url, "https://", "")}:sub" = "system:serviceaccount:kube-system:karpenter",
-            # 2. FIXED: Added the Audience (aud) claim
             "${replace(var.oidc_url, "https://", "")}:aud" = "sts.amazonaws.com"
           }
         }

@@ -17,7 +17,6 @@ resource "aws_internet_gateway" "igw" {
   tags   = { Name = "eks-igw" }
 }
 
-# Consolidated Route Table for all subnets
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
@@ -35,13 +34,12 @@ resource "aws_subnet" "public" {
   cidr_block              = "10.0.${count.index + 10}.0/24"
   availability_zone       = data.aws_availability_zones.available.names[count.index]
   
-  # CRITICAL: Nodes must have public IPs to reach the internet without a NAT Gateway
   map_public_ip_on_launch = true
 
   tags = {
     Name                                = "eks-public-${count.index}"
     "kubernetes.io/role/elb"            = "1" 
-    "kubernetes.io/role/internal-elb"   = "1" # Added so internal ALBs also work here
+    "kubernetes.io/role/internal-elb"   = "1"
     "karpenter.sh/discovery"            = var.cluster_name
     "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
