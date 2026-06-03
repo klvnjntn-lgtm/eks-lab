@@ -8,6 +8,8 @@ This architecture demonstrates a production-style Kubernetes platform on AWS des
 
 The cluster leverages managed Kubernetes through Amazon EKS, dynamic node provisioning with Karpenter, GitOps deployments using ArgoCD, and centralized monitoring through Prometheus and Grafana.
 
+[Deep Dive Documentation](docs/infrastructure.md)
+
 ---
 
 ## Core Components
@@ -72,13 +74,13 @@ Benefits:
 
 ---
 
-### Observability Stack
+## Observability Stack
 
-#### Prometheus
+### Cloudwatch
 
-Collects cluster and application metrics.
+CloudWatch collects metrics, logs, and operational data across the environment.
 
-#### Grafana
+### Grafana
 
 Visualizes operational data through dashboards and alerts.
 
@@ -179,6 +181,24 @@ This GitOps workflow separates build and deployment responsibilities while maint
 * More extensive troubleshooting requirements
 
 * Higher infrastructure management overhead
+
+---
+
+### Challenges Faced
+
+[View Challenges](docs/challenges.md)
+
+### Design Decisions
+
+[View Decisions](docs/decisions.md)
+
+### Installation Guide
+
+[Getting Started](docs/installation.md)
+
+### Future Improvements
+
+[Future Plans](docs/future-projects.md)
 
 ---
 
