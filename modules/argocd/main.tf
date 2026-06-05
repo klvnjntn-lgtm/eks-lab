@@ -28,9 +28,9 @@ resource "kubectl_manifest" "guestbook_app" {
     spec = {
       project = "default"
       source = {
-        repoURL        = "https://github.com/klvnjntn-lgtm/cloud-infrastructure-project-kj"
+        repoURL        = "https://github.com/klvnjntn-lgtm/eks-lab" # 👈 Kept your repo
         targetRevision = "HEAD"
-        path           = "eks-project/k8s/guestbook"
+        path           = "k8s/guestbook" # 👈 FIX: Removed the leading "/"
       }
       destination = {
         server    = "https://kubernetes.default.svc"
