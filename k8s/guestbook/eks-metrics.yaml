@@ -2,11 +2,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: argocd-cloudwatch-dashboard
-  namespace: argocd
+  namespace: monitoring               # 👈 Recommended from step 2 so Grafana can see it
   labels:
     grafana_dashboard: "1"
-annotations:
-  grafana_folder: "ArgoCD Monitoring"
+  annotations:                        # 👈 FIX: Move this inside the metadata block!
+    grafana_folder: "ArgoCD Monitoring"
 data:
   argocd-dashboard.json: |-
     {
