@@ -19,7 +19,7 @@ spec:
             labelValue: "1"
             searchNamespace: ALL
         persistence:
-          enabled: true
+          enabled: false
           storageClassName: "gp3" # Adjust based on your EKS storage class
           size: 10Gi
   destination:
